@@ -1,6 +1,7 @@
 package lt.karolis.microservices28.currencyconversionservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,9 @@ import java.util.Map;
 
 @RestController
 public class CurrencyConvertionController {
+
+    @Autowired
+    CurrencyExchangeProxy currencyExchangeProxy;
 
     @GetMapping("/currency-conversion/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion convertCurrency(@PathVariable String from, @PathVariable String to,
@@ -29,9 +33,6 @@ public class CurrencyConvertionController {
 //        return new CurrencyConversion(1L, from, to, quantity, BigDecimal.ONE, BigDecimal.ONE, "");
         return new CurrencyConversion(body.getId(), body.getFrom(), body.getTo(), body.getConversionMultiple(), quantity, quantity.multiply(body.getConversionMultiple()), body.getEnvironment() + " restTemplate");
     }
-
-    @Autowired
-    CurrencyExchangeProxy currencyExchangeProxy;
 
     @GetMapping("/currency-conversion-feign/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion convertCurrencyfeign(@PathVariable String from, @PathVariable String to,

@@ -1,5 +1,6 @@
 package lt.karolis.microservices28.currencyconversionservice.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,18 @@ public class CurrencyConvertionController {
                         CurrencyConversion.class, uriVariables);
         CurrencyConversion body = responseEntity.getBody();
 //        return new CurrencyConversion(1L, from, to, quantity, BigDecimal.ONE, BigDecimal.ONE, "");
-        return new CurrencyConversion(body.getId(), body.getFrom(), body.getTo(), body.getConversionMultiple(), quantity, quantity.multiply(body.getConversionMultiple()), "");
+        return new CurrencyConversion(body.getId(), body.getFrom(), body.getTo(), body.getConversionMultiple(), quantity, quantity.multiply(body.getConversionMultiple()), body.getEnvironment() + " restTemplate");
+    }
+
+    @Autowired
+    CurrencyExchangeProxy currencyExchangeProxy;
+
+    @GetMapping("/currency-conversion-feign/from/{from}/to/{to}/quantity/{quantity}")
+    public CurrencyConversion convertCurrencyfeign(@PathVariable String from, @PathVariable String to,
+                                                   @PathVariable BigDecimal quantity) {
+
+        CurrencyConversion body = currencyExchangeProxy.convertCurrency(from, to);
+//        return new CurrencyConversion(1L, from, to, quantity, BigDecimal.ONE, BigDecimal.ONE, "");
+        return new CurrencyConversion(body.getId(), body.getFrom(), body.getTo(), body.getConversionMultiple(), quantity, quantity.multiply(body.getConversionMultiple()), body.getEnvironment() + " feign");
     }
 }

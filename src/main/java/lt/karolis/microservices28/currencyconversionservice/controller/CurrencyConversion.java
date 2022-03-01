@@ -7,7 +7,7 @@ public class CurrencyConversion {
     private Long id;
     private String from;
     private String to;
-    private BigDecimal conversionMutiply;
+    private BigDecimal conversionMultiple;
     private BigDecimal quantity;
     private BigDecimal totalCalculatedAmount;
     private String environment;
@@ -19,7 +19,7 @@ public class CurrencyConversion {
         this.id = id;
         this.from = from;
         this.to = to;
-        this.conversionMutiply = conversionMutiply;
+        this.conversionMultiple = conversionMutiply;
         this.quantity = quantity;
         this.totalCalculatedAmount = totalCalculatedAmount;
         this.environment = environment;
@@ -49,12 +49,12 @@ public class CurrencyConversion {
         this.to = to;
     }
 
-    public BigDecimal getConversionMutiply() {
-        return conversionMutiply;
+    public BigDecimal getConversionMultiple() {
+        return conversionMultiple;
     }
 
-    public void setConversionMutiply(BigDecimal conversionMutiply) {
-        this.conversionMutiply = conversionMutiply;
+    public void setConversionMultiple(BigDecimal conversionMultiple) {
+        this.conversionMultiple = conversionMultiple;
     }
 
     public BigDecimal getQuantity() {
